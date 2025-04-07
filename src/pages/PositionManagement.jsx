@@ -45,6 +45,7 @@ const PositionManagement = () => {
 
     // Chỉnh sửa chức vụ
     const handleEdit = (record) => {
+
         setIsEditing(true);
         setCurrentPosition(record);
         form.setFieldsValue({
@@ -52,6 +53,8 @@ const PositionManagement = () => {
             description: record.description
         });
         setIsModalVisible(true);
+
+        
     };
 
     // Cột của bảng
