@@ -8,5 +8,7 @@ export const api = {
 
     postSignup: (data) => http.post("auth/signup", data),
 
-    getLogout: () => http.get("auth/logout"),   
+    getLogout: () => http.get("auth/logout"),  
+    
+    getAllEmployees: () => http.get("employee"),
 };

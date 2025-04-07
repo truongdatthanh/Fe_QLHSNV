@@ -10,7 +10,7 @@ const { Option } = Select;
 const AddEmployee = () => {
     const [form] = Form.useForm();
     const [avatar, setAvatar] = useState(null);
-    const  departments = ["IT", "HR", "Finance", "Marketing"]; // Example departments
+    const departments = ["IT", "HR", "Finance", "Marketing"]; // Example departments
 
     const handleAvatarChange = (info) => {
         if (info.file.status === 'done' || info.file.status === 'uploading') {
@@ -78,7 +78,7 @@ const AddEmployee = () => {
                     <TabPane tab="Thông tin cá nhân" key="1">
                         <Row gutter={16}>
                             <Col span={12}>
-                            <Form.Item
+                                <Form.Item
                                     name="employeeId"
                                     label="ID Nhân Viên"
                                     rules={[{ required: true, message: 'Vui lòng nhập ID nhân viên' }]}
