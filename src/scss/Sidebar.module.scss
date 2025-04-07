@@ -1,0 +1,61 @@
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: white;
+    min-height: 120vh;
+    height: auto;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.3); // Thêm bóng đổ
+
+    .sidebar-header {
+        background: url("https://backstage.vn/storage/2023/10/Son-Tung-M-TP-chinh-thuc-quay-tro-lai-Vietnam-Idol-2023-sau-9-nam-e1697374758118.jpg");
+        background-size: cover;
+        background-position: center;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            background-color: aliceblue;
+        }
+    }
+
+
+    .sidebar-content {
+        ul {
+            list-style-type: none;
+            padding: 0;
+
+            .navigate {
+                text-decoration: none;
+                color: white;
+                display: block;
+                padding: 10px 20px;
+
+                &:hover {
+                    background-color: #f5deb3;
+                    font-weight: bold;
+                    color: #2A3D66;
+                }
+                li {
+
+                    padding: 10px;
+                    cursor: pointer;
+                }
+
+                &.active {
+                    background-color: #f5deb3;
+                    font-weight: bold;
+                    color: #ccc;
+                    color: #2A3D66;
+                }
+            }
+        }
+
+    }
+
+}
