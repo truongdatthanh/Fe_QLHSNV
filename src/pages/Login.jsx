@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { api } from '../services/callAPI.service';
 import { useNavigate } from 'react-router-dom';
+import { Card, Input, Button, Typography, Form } from 'antd';
+
+const { Title, Text } = Typography;
 
 const Login = () => {
     const navigate = useNavigate();
@@ -31,41 +34,67 @@ const Login = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-                <label>UserName:</label>
-                <input
-                    type="text"
-                    defaultValue="truongdat1"
-                    placeholder="Nhập tên tài khoản"
-                    {...register("username", { required: "Vui lòng nhập tên tài khoản" })}
-                />
-                {errors.username && <p>{errors.username.message}</p>}
-            </div>
+        <div style={{
+            minHeight: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#f0f2f5',
+        }}>
+            <Card
+                style={{
+                    width: 400,
+                    padding: 24,
+                    borderRadius: 12,
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+                }}
+            >
+                <div style={{ textAlign: 'center', marginBottom: 20 }}>
+                    <img src="/logo.png" alt="logo" style={{ height: 60, marginBottom: 10 }} />
+                    <Title level={3}>Đăng nhập hệ thống</Title>
+                </div>
 
-            <div>
-                <label>Password:</label>
-                <input
-                    type="password"
-                    defaultValue="Dat20031@"
-                    placeholder="Nhập mật khẩu"
-                    {...register("password", {
-                        required: "Vui lòng nhập mật khẩu",
-                        minLength: {
-                            value: 8,
-                            message: "Mật khẩu phải ít nhất 8 ký tự"
-                        }
-                    })}
-                />
-                {errors.password && <p>{errors.password.message}</p>}
-            </div>
+                <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
+                    <Form.Item label="Tên tài khoản" required>
+                        <Input
+                            placeholder="Nhập tên tài khoản"
+                            defaultValue="truongdat1"
+                            {...register("username", { required: "Vui lòng nhập tên tài khoản" })}
+                        />
+                        {errors.username && (
+                            <Text type="danger">{errors.username.message}</Text>
+                        )}
+                    </Form.Item>
 
-            <button type="submit">Đăng nhập</button>
+                    <Form.Item label="Mật khẩu" required>
+                        <Input.Password
+                            placeholder="Nhập mật khẩu"
+                            defaultValue="Dat20031@"
+                            {...register("password", {
+                                required: "Vui lòng nhập mật khẩu",
+                                minLength: {
+                                    value: 8,
+                                    message: "Mật khẩu phải ít nhất 8 ký tự"
+                                }
+                            })}
+                        />
+                        {errors.password && (
+                            <Text type="danger">{errors.password.message}</Text>
+                        )}
+                    </Form.Item>
 
-            <div>Nếu chưa có tài khoản
-                <a href="/auth/register">Đăng ký ngay</a>
-            </div>
-        </form>
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit" block>
+                            Đăng nhập
+                        </Button>
+                    </Form.Item>
+
+                    <Text>
+                        Bạn chưa có tài khoản? <a href="/auth/register">Đăng ký ngay</a>
+                    </Text>
+                </Form>
+            </Card>
+        </div>
     );
 };
 
