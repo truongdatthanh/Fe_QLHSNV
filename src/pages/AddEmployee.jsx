@@ -93,7 +93,7 @@ const AddEmployee = () => {
 
             if (newEmploy.status === 200 && newContract.status === 200 && newEdu.status === 200) {
                 alert("Thêm nhân viên thành công");
-                form.resetFields();
+                //form.resetFields();
             }
             else {
                 alert("Thêm nhân viên thất bại");

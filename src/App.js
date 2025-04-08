@@ -51,6 +51,8 @@ import ReportManagements from './pages/ReportManagement';
 import Login from './pages/Login';
 import ProtectedRoute from './components/ProtectRoute';
 import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import RewardPunishmentManagement from './pages/RewardPunish';
 
 
 function App() {
@@ -65,6 +67,12 @@ function App() {
 
           {/* Các Route cần đăng nhập */}
           <Route path='/' element={
+            <ProtectedRoute>
+              <Layout Component={Dashboard} />
+            </ProtectedRoute>
+          } />
+
+          <Route path='/employees' element={
             <ProtectedRoute>
               <Layout Component={EmployeeManagement} />
             </ProtectedRoute>
@@ -99,7 +107,16 @@ function App() {
               <Layout Component={ReportManagements} />
             </ProtectedRoute>
           } />
+
+
+          <Route path='/reward' element={
+            <ProtectedRoute>
+              <Layout Component={RewardPunishmentManagement} />
+            </ProtectedRoute>
+          } />
         </Routes>
+
+
       </BrowserRouter>
     </>
   );

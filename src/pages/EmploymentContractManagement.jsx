@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Modal, Form, Input, DatePicker, message } from 'antd';
 import { api } from '../services/callAPI.service';
+import { isVisible } from '@testing-library/user-event/dist/utils';
 
 const EmploymentContractManagement = () => {
     const [contracts, setContracts] = useState([]);
@@ -43,12 +44,14 @@ const EmploymentContractManagement = () => {
     };
 
     const columns = [
-        { title: 'ID', dataIndex: 'id', key: 'id' },
-        { title: 'Mã nhân viên', dataIndex: ['employee', 'employeeCode'], key: 'employeeCode' },
-        { title: 'Loại hợp đồng', dataIndex: 'contractType', key: 'contractType' },
-        { title: 'Ngày bắt đầu', dataIndex: 'startDate', key: 'startDate' },
-        { title: 'Ngày kết thúc', dataIndex: 'endDate', key: 'endDate' },
+        { title: 'ID', dataIndex: 'id', key: 'id', isVisible: false },
+        { title: 'Mã nhân viên', dataIndex: ['employee', 'employeeCode'], key: 'employeeCode', isVisible: true },
+        { title: 'Loại hợp đồng', dataIndex: 'contractType', key: 'contractType', isVisible: true  },
+        { title: 'Ngày bắt đầu', dataIndex: 'startDate', key: 'startDate' ,isVisible: true },
+        { title: 'Ngày kết thúc', dataIndex: 'endDate', key: 'endDate', isVisible: true  },
     ];
+
+    const visibleColumns = columns.filter((column) => column.isVisible !== false);
 
     return (
         <div style={{ padding: '24px' }}>
@@ -65,7 +68,7 @@ const EmploymentContractManagement = () => {
                 Thêm hợp đồng
             </Button>
             <Table
-                columns={columns}
+                columns={visibleColumns}
                 dataSource={contracts}
                 rowKey="id"
                 pagination={{ pageSize: 5 }}

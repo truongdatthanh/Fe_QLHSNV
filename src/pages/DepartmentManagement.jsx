@@ -131,7 +131,7 @@
 
 
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, Form, Input, message, Space } from 'antd';
+import { Table, Button, Modal, Form, Input, message, Space, Popconfirm } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { api } from '../services/callAPI.service';
 import { isVisible } from '@testing-library/user-event/dist/utils';
@@ -187,31 +187,37 @@ const DepartmentManagement = () => {
             } else {
                 message.error('Lỗi khi xóa phòng ban!');
             }
-         
+
         } catch (error) {
             message.error('Đã xảy ra lỗi khi xóa phòng ban!');
         }
     }
 
 
- 
+
     const columns = [
-        { title: 'MaPB', dataIndex: '_id', key: 'id' , isVisible: false},
+        { title: 'MaPB', dataIndex: '_id', key: 'id', isVisible: false },
         { title: 'Tên phòng ban', dataIndex: 'name', key: 'name', isVisible: true },
         {
             title: 'Thao tác',
             isVisible: true,
             key: 'action',
             render: (_, record) => (
-                <Space>
-                    <Button
-                        type="primary"
-                        danger
-                        onClick={() => handleDelete(record._id)}
-                        style={{ borderRadius: '4px', backgroundColor: '#f5222d', borderColor: '#f5222d' }}
+                <Space size="middle">
+                    <Popconfirm
+                        title="Bạn có chắc chắn muốn xóa chức vụ này?"
+                        onConfirm={() => handleDelete(record._id)}
+                        okText="Có"
+                        cancelText="Không"
                     >
-                        Xóa
-                    </Button>
+                        <Button
+                            type="danger"
+                            danger
+                            style={{ color: "white", borderRadius: '4px', backgroundColor: '#f5222d', borderColor: '#f5222d' }}
+                        >
+                            Xóa
+                        </Button>
+                    </Popconfirm>
                 </Space>
             ),
         },

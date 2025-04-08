@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, Button, Space, Modal, Form, Input, message, Popconfirm } from 'antd';
 import { PlusOutlined, EditOutlined } from '@ant-design/icons';
 import { api } from '../services/callAPI.service';
+import { isVisible } from '@testing-library/user-event/dist/utils';
 
 const PositionManagement = () => {
     const [positions, setPositions] = useState([]);
@@ -49,13 +50,15 @@ const PositionManagement = () => {
     };
 
 
+
     // Cột của bảng
     const columns = [
-        { title: 'ID', dataIndex: '_id', key: 'id' },
-        { title: 'Tên chức vụ', dataIndex: 'name', key: 'name' },
+        { title: 'ID', dataIndex: '_id', key: 'id', isVisible: false},
+        { title: 'Tên chức vụ', dataIndex: 'name', key: 'name', isVisible: true },
         {
             title: 'Thao tác',
             key: 'action',
+            isVisible: true,
             render: (_, record) => (
                 <Space size="middle">
                     <Popconfirm
@@ -66,7 +69,8 @@ const PositionManagement = () => {
                     >
                         <Button
                             type="danger"
-                            style={{ borderRadius: '4px' }}
+                            danger
+                            style={{color: "white", borderRadius: '4px', backgroundColor: '#f5222d', borderColor: '#f5222d' }}
                         >
                             Xóa
                         </Button>
@@ -75,6 +79,9 @@ const PositionManagement = () => {
             ),
         },
     ];
+
+    const visibleColumns = columns.filter(column => column.isVisible);
+
 
     return (
         <div style={{ padding: '24px', backgroundColor: '#fff', borderRadius: '8px' }}>
@@ -95,7 +102,7 @@ const PositionManagement = () => {
             </div>
 
             <Table
-                columns={columns}
+                columns={visibleColumns}
                 dataSource={positions}
                 rowKey="id"
                 pagination={{ pageSize: 5 }}

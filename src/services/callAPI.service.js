@@ -1,3 +1,4 @@
+import { get } from "react-hook-form";
 import { http } from "../config/configHeaders";
 
 
@@ -24,5 +25,5 @@ export const api = {
     postCreatePosition: (data) => http.post("position", data),
     deletePosition: (id) => http.delete(`position/${id}`),
 
-
+    getAllRewardPunishments: () => http.get("rp"),
 };
