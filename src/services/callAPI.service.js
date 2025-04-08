@@ -11,4 +11,19 @@ export const api = {
     getLogout: () => http.get("auth/logout"),  
     
     getAllEmployees: () => http.get("employee"),
+
+    getContractByEmployeeId: (id) => http.get(`contract/${id}`),
+
+    getAllContracts: () => http.get("contract"),
+
+    getEducationByEmployeeId: (id) => http.get(`education/${id}`),
+
+    postCreateEmployee: (data) => http.post("employee", data),
+
+    postCreateContract: (data) => http.post("contract", data),
+
+    postCreateEducation: (data) => http.post("education", data),
+
+    getAllPositions: () => http.get("position"),
+    getAllDepartments: () => http.get("department"),
 };
