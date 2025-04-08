@@ -82,7 +82,7 @@ const AddEmployee = () => {
                 endDate: formattedValues.contractEndDate,
                 salary: formattedValues.salary
             });
-            
+
             const newEdu = await api.postCreateEducation({
                 employee: formattedValues.employeeCode,
                 degree: formattedValues.degree,
@@ -93,7 +93,7 @@ const AddEmployee = () => {
 
             if (newEmploy.status === 200 && newContract.status === 200 && newEdu.status === 200) {
                 alert("Thêm nhân viên thành công");
-                // form.resetFields();
+                form.resetFields();
             }
             else {
                 alert("Thêm nhân viên thất bại");
@@ -107,8 +107,8 @@ const AddEmployee = () => {
     return (
         <div style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto' }}>
             {/* Back Button */}
-            <Link to="/employees">
-                <Button type="link" style={{ paddingLeft: 0, marginBottom: '16px', color: '#1890ff' }}>
+            <Link to="/">
+                <Button type="" style={{ paddingLeft: 0, marginBottom: '16px', color: '#1890ff' }}>
                     &lt; Quay lại danh sách nhân viên
                 </Button>
             </Link>

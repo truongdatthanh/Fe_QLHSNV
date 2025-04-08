@@ -3,11 +3,7 @@ import { Table, Button, Space, Modal, Form, Input, message, Popconfirm } from 'a
 import { PlusOutlined, EditOutlined } from '@ant-design/icons';
 
 const PositionManagement = () => {
-    const [positions, setPositions] = useState([
-        { id: 1, name: 'Giám đốc', description: 'Quản lý toàn bộ công ty' },
-        { id: 2, name: 'Trưởng phòng', description: 'Quản lý nhân viên trong phòng' },
-        { id: 3, name: 'Nhân viên', description: 'Thực hiện công việc được giao' }
-    ]);
+    const [positions, setPositions] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [currentPosition, setCurrentPosition] = useState(null);
@@ -25,17 +21,6 @@ const PositionManagement = () => {
         form.resetFields();
     };
 
-    // Cập nhật chức vụ
-    const handleEditPosition = (values) => {
-        setPositions(positions.map(position =>
-            position.id === currentPosition.id ? { ...position, ...values } : position
-        ));
-        message.success('Cập nhật chức vụ thành công!');
-        setIsModalVisible(false);
-        setIsEditing(false);
-        form.resetFields();
-    };
-
     // Xóa chức vụ
     const handleDelete = (id) => {
         const updatedPositions = positions.filter(position => position.id !== id);
@@ -43,20 +28,10 @@ const PositionManagement = () => {
         message.success('Xóa chức vụ thành công!');
     };
 
-    // Chỉnh sửa chức vụ
-    const handleEdit = (record) => {
-        setIsEditing(true);
-        setCurrentPosition(record);
-        form.setFieldsValue({
-            name: record.name,
-            description: record.description
-        });
-        setIsModalVisible(true);
-    };
 
     // Cột của bảng
     const columns = [
-        { title: 'ID', dataIndex: 'id', key: 'id' },
+        { title: 'ID', dataIndex: '_id', key: 'id' },
         { title: 'Tên chức vụ', dataIndex: 'name', key: 'name' },
         { title: 'Mô tả', dataIndex: 'description', key: 'description' },
         {

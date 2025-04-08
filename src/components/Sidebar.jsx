@@ -46,27 +46,27 @@ const Sidebar = () => {
                 />
                 <Title level={4} style={{ color: "#fff" }}>{ user.username }</Title>
             </div>
-            <Menu theme="dark" mode="inline" defaultSelectedKeys={["dashboard"]}>
-                <Menu.Item key="employees" icon={<TeamOutlined />}>
-                    <NavLink to="/">Quản Lý Nhân Viên</NavLink>
-                </Menu.Item>
-                <Menu.Item key="departments" icon={<ApartmentOutlined />}>
-                    <NavLink to="/departments">Quản Lý Phòng Ban</NavLink>
-                </Menu.Item>
-                <Menu.Item key="positions" icon={<SolutionOutlined />}>
-                    <NavLink to="/positions">Quản Lý Chức Vụ</NavLink>
-                </Menu.Item>
-                <Menu.Item key="contracts" icon={<FileTextOutlined />}>
-                    <NavLink to="/contracts">Hợp Đồng Lao Động</NavLink>
-                </Menu.Item>
-                <Menu.Item key="recruitment" icon={<UserSwitchOutlined />}>
-                    <NavLink to="/recruitment">Tuyển Dụng</NavLink>
-                </Menu.Item>
-                <Menu.Item key="reports" icon={<BarChartOutlined />}>
-                    <NavLink to="/reports">Báo Cáo & Thống Kê</NavLink>
-                </Menu.Item>
-            </Menu>
-        </Sider>
+            <Menu theme="dark" mode="inline" defaultSelectedKeys={["/"]}>
+            <Menu.Item key="/" icon={<TeamOutlined />}>
+                <NavLink to="/">Quản Lý Nhân Viên</NavLink>
+            </Menu.Item>
+            <Menu.Item key="/departments" icon={<ApartmentOutlined />}>
+                <NavLink to="/departments">Quản Lý Phòng Ban</NavLink>
+            </Menu.Item>
+            <Menu.Item key="/positions" icon={<SolutionOutlined />}>
+                <NavLink to="/positions">Quản Lý Chức Vụ</NavLink>
+            </Menu.Item>
+            <Menu.Item key="/contracts" icon={<FileTextOutlined />}>
+                <NavLink to="/contracts">Hợp Đồng Lao Động</NavLink>
+            </Menu.Item>
+            <Menu.Item key="/recruitment" icon={<UserSwitchOutlined />}>
+                <NavLink to="/recruitment">Tuyển Dụng</NavLink>
+            </Menu.Item>
+            <Menu.Item key="/reports" icon={<BarChartOutlined />}>
+                <NavLink to="/reports">Báo Cáo & Thống Kê</NavLink>
+            </Menu.Item>
+        </Menu>
+        </Sider >
     );
 };
 
