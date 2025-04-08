@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Button, Space, Modal, Form, Input, message, Popconfirm } from 'antd';
 import { PlusOutlined, EditOutlined } from '@ant-design/icons';
+import { api } from '../services/callAPI.service';
 
 const PositionManagement = () => {
     const [positions, setPositions] = useState([]);
@@ -9,16 +10,35 @@ const PositionManagement = () => {
     const [currentPosition, setCurrentPosition] = useState(null);
     const [form] = Form.useForm();
 
+    const fecthPosition = async () => {
+        const res = await api.getAllPositions();
+        if (res.status === 200) {
+            setPositions(res.data.data);
+        } else {
+            message.error('Lỗi khi lấy danh sách chức vụ!');
+        }
+    };
+
+    useEffect(() => {
+        fecthPosition();
+    }, []);
+
     // Thêm chức vụ
-    const handleAddPosition = (values) => {
-        const newPosition = {
-            id: positions.length + 1,
-            ...values
-        };
-        setPositions([...positions, newPosition]);
-        message.success('Thêm chức vụ thành công!');
-        setIsModalVisible(false);
-        form.resetFields();
+    const handleAddPosition = async (values) => {
+        try {
+            const response = await api.postCreatePosition(values);
+            if (response.status === 200 || response.status === 201) {
+
+                setPositions((prevPos) => [...prevPos, response.data.data]);
+                alert('Thêm chức thành công!');
+                setIsModalVisible(false);
+                form.resetFields();
+            } else {
+                alert('Lỗi khi thêm phòng ban!');
+            }
+        } catch (error) {
+            alert('Đã xảy ra lỗi khi thêm phòng ban!');
+        }
     };
 
     // Xóa chức vụ
@@ -33,23 +53,14 @@ const PositionManagement = () => {
     const columns = [
         { title: 'ID', dataIndex: '_id', key: 'id' },
         { title: 'Tên chức vụ', dataIndex: 'name', key: 'name' },
-        { title: 'Mô tả', dataIndex: 'description', key: 'description' },
         {
             title: 'Thao tác',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Button
-                        icon={<EditOutlined />}
-                        type="default"
-                        onClick={() => handleEdit(record)}
-                        style={{ borderRadius: '4px', color: '#1890ff' }}
-                    >
-                        Sửa
-                    </Button>
                     <Popconfirm
                         title="Bạn có chắc chắn muốn xóa chức vụ này?"
-                        onConfirm={() => handleDelete(record.id)}
+                        onConfirm={() => handleDelete(record._id)}
                         okText="Có"
                         cancelText="Không"
                     >
@@ -104,7 +115,7 @@ const PositionManagement = () => {
                 <Form
                     form={form}
                     layout="vertical"
-                    onFinish={isEditing ? handleEditPosition : handleAddPosition}
+                    onFinish={handleAddPosition}
                 >
                     <Form.Item
                         name="name"
@@ -122,7 +133,7 @@ const PositionManagement = () => {
                             htmlType="submit"
                             style={{ width: '100%' }}
                         >
-                            {isEditing ? 'Cập nhật chức vụ' : 'Thêm chức vụ'}
+                            {'Thêm chức vụ'}
                         </Button>
                     </Form.Item>
                 </Form>

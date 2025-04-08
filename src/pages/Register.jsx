@@ -1,71 +1,83 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { api } from '../services/callAPI.service';
 import { useNavigate } from 'react-router-dom';
+import { Form, Input, Button, Typography, Card } from 'antd';
+
+const { Title } = Typography;
 
 const Register = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { control, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
-        const res = await api.postSignup(data);
-        if (res.status !== 200) {
-            alert("Đăng ký thất bại");
-            return;
+        try {
+            const res = await api.postSignup(data);
+            if (res.status !== 200) {
+                alert("Đăng ký thất bại");
+                return;
+            }
+            alert("Đăng ký thành công");
+            navigate("/auth/login", { replace: true });
+        } catch (error) {
+           alert("Có lỗi xảy ra khi đăng ký");
         }
-        navigate("/auth/login", { replace: true });
-        alert("Đăng ký thành công");
     };
 
     return (
-        <div className="register-form">
-            <h2>Đăng ký</h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div>
-                    <label>UserName:</label>
-                    <input
-                        type="text"
-                        placeholder="Nhập tên tài khoản"
-                        {...register("username", { required: "Vui lòng nhập tên tài khoản" })}
-                    />
-                    {errors.username && <p>{errors.username.message}</p>}
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        placeholder="Nhập mật khẩu"
-                        {...register("password", {
-                            required: "Vui lòng nhập mật khẩu",
-                            minLength: {
-                                value: 8,
-                                message: "Mật khẩu phải ít nhất 8 ký tự"
-                            }
-                        })}
-                    />
-                    {errors.password && <p>{errors.password.message}</p>}
-                </div>
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        placeholder="Nhập email"
-                        {...register("email", { required: "Vui lòng nhập email" })}
-                    />
-                    {errors.email && <p>{errors.email.message}</p>}
-                </div>
-                <div>
-                    <label>Full Name:</label>
-                    <input
-                        type="text"
-                        placeholder="Nhập họ tên"
-                        {...register("fullname", { required: "Vui lòng nhập họ tên" })}
-                    />
-                    {errors.fullname && <p>{errors.fullname.message}</p>}
-                </div>
+        <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 50 }}>
+            <Card style={{ width: 400 }}>
+                <Title level={3} style={{ textAlign: 'center' }}>Đăng ký</Title>
+                <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
+                    <Form.Item
+                        label="Tên tài khoản"
+                        validateStatus={errors.username ? 'error' : ''}
+                        help={errors.username?.message}
+                    >
+                        <Controller
+                            name="username"
+                            control={control}
+                            rules={{ required: "Vui lòng nhập tên tài khoản" }}
+                            render={({ field }) => <Input {...field} />}
+                        />
+                    </Form.Item>
 
-                <button type="submit">Đăng ký</button>
-            </form>
+                    <Form.Item
+                        label="Mật khẩu"
+                        validateStatus={errors.password ? 'error' : ''}
+                        help={errors.password?.message}
+                    >
+                        <Controller
+                            name="password"
+                            control={control}
+                            rules={{
+                                required: "Vui lòng nhập mật khẩu",
+                                minLength: { value: 8, message: "Mật khẩu phải ít nhất 8 ký tự" }
+                            }}
+                            render={({ field }) => <Input.Password {...field} />}
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Email"
+                        validateStatus={errors.email ? 'error' : ''}
+                        help={errors.email?.message}
+                    >
+                        <Controller
+                            name="email"
+                            control={control}
+                            rules={{ required: "Vui lòng nhập email" }}
+                            render={({ field }) => <Input {...field} />}
+                        />
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit" block>
+                            Đăng ký
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Card>
         </div>
     );
 };

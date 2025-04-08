@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Button, Modal, Form, Input, DatePicker, message } from 'antd';
+import { api } from '../services/callAPI.service';
 
 const EmploymentContractManagement = () => {
-    const [contracts, setContracts] = useState([
-        {
-            id: 1,
-            employeeName: 'Nguyễn Văn A',
-            contractType: 'Hợp đồng xác định thời hạn',
-            startDate: '2023-01-01',
-            endDate: '2025-01-01',
-        },
-        {
-            id: 2,
-            employeeName: 'Trần Thị B',
-            contractType: 'Hợp đồng không xác định thời hạn',
-            startDate: '2020-05-15',
-            endDate: '',
-        },
-    ]);
+    const [contracts, setContracts] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [form] = Form.useForm();
 
+
+    useEffect(() => {
+        const fectContract = async () => {
+            const res = await api.getAllContracts();
+            if (res.status === 200) {
+                setContracts(res.data.data);
+            } else {
+                message.error('Lỗi khi lấy danh sách hợp đồng!');
+            }
+        };
+        fectContract();
+    }, []);
+
+    console.log('contracts', contracts);
     const showModal = () => {
         setIsModalVisible(true);
     };
@@ -44,7 +44,7 @@ const EmploymentContractManagement = () => {
 
     const columns = [
         { title: 'ID', dataIndex: 'id', key: 'id' },
-        { title: 'Tên nhân viên', dataIndex: 'employeeName', key: 'employeeName' },
+        { title: 'Mã nhân viên', dataIndex: ['employee', 'employeeCode'], key: 'employeeCode' },
         { title: 'Loại hợp đồng', dataIndex: 'contractType', key: 'contractType' },
         { title: 'Ngày bắt đầu', dataIndex: 'startDate', key: 'startDate' },
         { title: 'Ngày kết thúc', dataIndex: 'endDate', key: 'endDate' },
