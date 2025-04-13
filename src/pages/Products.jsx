@@ -17,17 +17,16 @@ const Products = () => {
         const fetchProducts = async () => {
             try {
                 const response = await api.getAllProducts();
-                console.log("Products data:", response.data); // Kiểm tra dữ liệu trả về
                 const data = response.data.data; // Truy cập vào mảng sản phẩm
                 setProducts(Array.isArray(data) ? data : []);
             } catch (error) {
                 console.error("Error fetching products:", error);
             }
         };
-    
+
         fetchProducts();
     }, []);
-    
+
     const loadProducts = async () => {
         try {
             const response = await api.getAllProducts();
@@ -37,13 +36,17 @@ const Products = () => {
             console.error("Error loading products:", error);
         }
     };
+
     // Thêm hoặc chỉnh sửa sản phẩm
     const handleAddEditProduct = async (e) => {
         e.preventDefault();
         try {
             if (editingProduct) {
-                await api.updateProduct(editingProduct._id, formValues);
+                // Khi chỉnh sửa, không gửi trường category
+                const { category, ...updatedValues } = formValues;
+                await api.updateProduct(editingProduct._id, updatedValues);
             } else {
+                // Khi thêm mới, gửi đầy đủ các trường
                 await api.createProduct(formValues);
             }
             setIsModalVisible(false);
@@ -58,7 +61,12 @@ const Products = () => {
     // Chỉnh sửa sản phẩm
     const handleEdit = (product) => {
         setEditingProduct(product);
-        setFormValues(product);
+        setFormValues({
+            name: product.name,
+            price: product.price,
+            quantity: product.quantity,
+            category: "", // Không chỉnh sửa category
+        });
         setIsModalVisible(true);
     };
 
@@ -162,16 +170,18 @@ const Products = () => {
                                     required
                                 />
                             </div>
-                            <div style={{ marginBottom: "16px" }}>
-                                <label>Category</label>
-                                <input
-                                    type="text"
-                                    value={formValues.category}
-                                    onChange={(e) => setFormValues({ ...formValues, category: e.target.value })}
-                                    style={{ width: "100%", padding: "8px", marginTop: "4px" }}
-                                    required
-                                />
-                            </div>
+                            {!editingProduct && (
+                                <div style={{ marginBottom: "16px" }}>
+                                    <label>Category</label>
+                                    <input
+                                        type="text"
+                                        value={formValues.category}
+                                        onChange={(e) => setFormValues({ ...formValues, category: e.target.value })}
+                                        style={{ width: "100%", padding: "8px", marginTop: "4px" }}
+                                        required
+                                    />
+                                </div>
+                            )}
                             <div style={{ textAlign: "right" }}>
                                 <button type="button" onClick={handleCancel} style={{ marginRight: "8px", padding: "8px 16px", backgroundColor: "#6c757d", color: "#fff", border: "none", borderRadius: "4px", cursor: "pointer" }}>
                                     Cancel
