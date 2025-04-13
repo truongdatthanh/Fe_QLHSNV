@@ -20,7 +20,7 @@
 
 import axios from "axios";
 
-export const BaseURL = "http://localhost:5000/";
+export const BaseURL = "http://localhost:3000/";
 
 // Tạo axios instance
 export const http = axios.create({

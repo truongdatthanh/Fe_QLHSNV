@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Layout, Menu, Typography } from "antd";
-import {
-    TeamOutlined,
-    ApartmentOutlined,
-    SolutionOutlined,
-    FileTextOutlined,
-    UserSwitchOutlined,
-    BarChartOutlined,
-} from "@ant-design/icons";
+import { ShoppingOutlined, UserOutlined, HomeOutlined } from "@ant-design/icons"; // Import thêm HomeOutlined
 import { NavLink } from "react-router-dom";
 import { api } from "../services/callAPI.service";
 
 const { Sider } = Layout;
 const { Title } = Typography;
-
-
 
 const Sidebar = () => {
     const [user, setUser] = useState([]);
@@ -30,11 +21,9 @@ const Sidebar = () => {
             } catch (err) {
                 console.log('Lỗi lấy thông tin user:', err);
             }
-        }
+        };
         getUser();
     }, [setUser]);
-
-    console.log("user", user.role);
 
     return (
         <Sider collapsible style={{ minHeight: "100vh", background: "#001529" }}>
@@ -44,26 +33,20 @@ const Sidebar = () => {
                     alt="Avatar"
                     style={{ borderRadius: "50%", marginBottom: "8px" }}
                 />
-                <Title level={4} style={{ color: "#fff" }}>{ user.username }</Title>
+                <Title level={4} style={{ color: "#fff" }}>{user.username}</Title>
             </div>
-            <Menu theme="dark" mode="inline" defaultSelectedKeys={["dashboard"]}>
-                <Menu.Item key="employees" icon={<TeamOutlined />}>
-                    <NavLink to="/">Quản Lý Nhân Viên</NavLink>
+            <Menu theme="dark" mode="inline" defaultSelectedKeys={["home"]}>
+                <Menu.Item key="home" icon={<HomeOutlined />}>
+                    <NavLink to="/">Trang Chủ</NavLink>
                 </Menu.Item>
-                <Menu.Item key="departments" icon={<ApartmentOutlined />}>
-                    <NavLink to="/departments">Quản Lý Phòng Ban</NavLink>
+                <Menu.Item key="products" icon={<ShoppingOutlined />}>
+                    <NavLink to="/products">Quản Lý Sản Phẩm</NavLink>
                 </Menu.Item>
-                <Menu.Item key="positions" icon={<SolutionOutlined />}>
-                    <NavLink to="/positions">Quản Lý Chức Vụ</NavLink>
+                <Menu.Item key="categories" icon={<ShoppingOutlined />}>
+                    <NavLink to="/categories">Quản Lý Danh Mục</NavLink>
                 </Menu.Item>
-                <Menu.Item key="contracts" icon={<FileTextOutlined />}>
-                    <NavLink to="/contracts">Hợp Đồng Lao Động</NavLink>
-                </Menu.Item>
-                <Menu.Item key="recruitment" icon={<UserSwitchOutlined />}>
-                    <NavLink to="/recruitment">Tuyển Dụng</NavLink>
-                </Menu.Item>
-                <Menu.Item key="reports" icon={<BarChartOutlined />}>
-                    <NavLink to="/reports">Báo Cáo & Thống Kê</NavLink>
+                <Menu.Item key="users" icon={<UserOutlined />}>
+                    <NavLink to="/users">Quản Lý Người Dùng</NavLink>
                 </Menu.Item>
             </Menu>
         </Sider>
