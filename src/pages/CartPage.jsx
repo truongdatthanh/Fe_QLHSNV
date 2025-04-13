@@ -89,10 +89,6 @@ const Cart = () => {
         }
         setLoading(true);
         try {
-            console.log('Đang cập nhật giỏ hàng...', cartItems);
-            const updated = await api.updateCart(cartItems);
-            console.log('Cập nhật giỏ hàng thành công:', updated.data.data);
-            setCartItems(updated.data.data);
             const orderData = {
                 cartItems,
                 totalPrice: getFinalPrice(),
