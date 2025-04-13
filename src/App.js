@@ -1,58 +1,18 @@
-// import './App.css';
-// import { BrowserRouter, Route, Routes } from 'react-router-dom';
-// import Layout from './layouts/Layout';
-// import Dashboard from './pages/Dashboard';
-// import EmployeeManagement from './pages/EmployeeManagement';
-// import DepartmentManagement from './pages/DepartmentManagement';
-// import PositionManagement from './pages/PositionManagement';
-// import EmploymentContractManagement from './pages/EmploymentContractManagement';
-// import AddEmployee from './pages/AddEmployee';
-// import ScrollToTop from './components/ScrollToTop';
-// import RecruitmentManagementPage from './pages/RecruitmentManagementPage';
-// import ReportManagements from './pages/ReportManagement';
-// import Login from './pages/Login';
-
-
-
-// function App() {
-//   return (
-//     <>
-//       <BrowserRouter>
-//         <ScrollToTop />
-//         <Routes>
-//           <Route path='/auth/login' element={<Layout Component={Login} />} />
-//           <Route path='/' element={<Layout Component={EmployeeManagement} />} />
-//           <Route path='/employees/add' element={<Layout Component={AddEmployee} />} />
-//           <Route path='/departments' element={<Layout Component={DepartmentManagement} />} />
-//           <Route path='/positions' element={<Layout Component={PositionManagement} />} />
-//           <Route path='/contracts' element={<Layout Component={EmploymentContractManagement} />} />
-//           <Route path='/recruitment' element={<Layout Component={RecruitmentManagementPage} />} />
-//           <Route path='/reports' element={<Layout Component={ReportManagements} />} />
-//         </Routes>
-//       </BrowserRouter >
-//     </>
-//   );
-// }
-
-// export default App;
-
-
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './layouts/Layout';
-import EmployeeManagement from './pages/EmployeeManagement';
-import DepartmentManagement from './pages/DepartmentManagement';
-import PositionManagement from './pages/PositionManagement';
-import EmploymentContractManagement from './pages/EmploymentContractManagement';
-import AddEmployee from './pages/AddEmployee';
 import ScrollToTop from './components/ScrollToTop';
-import RecruitmentManagementPage from './pages/RecruitmentManagementPage';
-import ReportManagements from './pages/ReportManagement';
 import Login from './pages/Login';
 import ProtectedRoute from './components/ProtectRoute';
 import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import RewardPunishmentManagement from './pages/RewardPunish';
+import HomePage from './pages/HomePage';
+import ProductPage from './pages/Product';
+import ProductDetail from './pages/ProductDetails';
+import About from './pages/AboutPage';
+import Cart from './pages/CartPage';
+import Order from './pages/OrderPage';
+import ChangePassword from './pages/ChangePassword';
+
 
 
 function App() {
@@ -62,58 +22,42 @@ function App() {
         <ScrollToTop />
         <Routes>
           {/* Login Route (Không cần bảo vệ) */}
+          <Route path='/' element={<Layout Component={HomePage} />} />
+          <Route path='/about' element={<Layout Component={About} />} />
           <Route path='/auth/login' element={<Login />} />
           <Route path='/auth/register' element={<Register />} />
 
           {/* Các Route cần đăng nhập */}
-          <Route path='/' element={
+          <Route path='/products' element={
             <ProtectedRoute>
-              <Layout Component={Dashboard} />
+              <Layout Component={ProductPage} />
             </ProtectedRoute>
           } />
 
-          <Route path='/employees' element={
+          <Route path='/products/:id' element={
             <ProtectedRoute>
-              <Layout Component={EmployeeManagement} />
-            </ProtectedRoute>
-          } />
-          <Route path='/employees/add' element={
-            <ProtectedRoute>
-              <Layout Component={AddEmployee} />
-            </ProtectedRoute>
-          } />
-          <Route path='/departments' element={
-            <ProtectedRoute>
-              <Layout Component={DepartmentManagement} />
-            </ProtectedRoute>
-          } />
-          <Route path='/positions' element={
-            <ProtectedRoute>
-              <Layout Component={PositionManagement} />
-            </ProtectedRoute>
-          } />
-          <Route path='/contracts' element={
-            <ProtectedRoute>
-              <Layout Component={EmploymentContractManagement} />
-            </ProtectedRoute>
-          } />
-          <Route path='/recruitment' element={
-            <ProtectedRoute>
-              <Layout Component={RecruitmentManagementPage} />
-            </ProtectedRoute>
-          } />
-          <Route path='/reports' element={
-            <ProtectedRoute>
-              <Layout Component={ReportManagements} />
+              <Layout Component={ProductDetail} />
             </ProtectedRoute>
           } />
 
-
-          <Route path='/reward' element={
+          <Route path='/carts' element={
             <ProtectedRoute>
-              <Layout Component={RewardPunishmentManagement} />
+              <Layout Component={Cart} />
             </ProtectedRoute>
           } />
+
+          <Route path='/orders' element={
+            <ProtectedRoute>
+              <Layout Component={Order} />
+            </ProtectedRoute>
+          } />
+
+          <Route path='/auth/change-password' element={
+            <ProtectedRoute>
+              <Layout Component={ChangePassword} />
+            </ProtectedRoute>
+          } />
+
         </Routes>
 
 

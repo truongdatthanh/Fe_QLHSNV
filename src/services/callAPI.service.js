@@ -1,29 +1,33 @@
-import { get } from "react-hook-form";
+
 import { http } from "../config/configHeaders";
 
 
 export const api = {
     postLogin: (data) => http.post("auth/login", data),
     getMe: (token) => http.get("auth/me", token),
-
     postSignup: (data) => http.post("auth/signup", data),
-
     getLogout: () => http.get("auth/logout"),  
-    getAllEmployees: () => http.get("employee"),
-    getContractByEmployeeId: (id) => http.get(`contract/${id}`),
-    getAllContracts: () => http.get("contract"),
-    getEducationByEmployeeId: (id) => http.get(`education/${id}`),
-    postCreateEmployee: (data) => http.post("employee", data),
-    postCreateContract: (data) => http.post("contract", data),
-    postCreateEducation: (data) => http.post("education", data),
-    getAllPositions: () => http.get("position"),
+    postChangePassword: (data) => http.post("auth/change-password", data),
 
-    getAllDepartments: () => http.get("department"),
-    postCreateDepartment: (data) => http.post("department", data),
-    deleteDepartment: (id) => http.delete(`department/${id}`),
-    
-    postCreatePosition: (data) => http.post("position", data),
-    deletePosition: (id) => http.delete(`position/${id}`),
 
-    getAllRewardPunishments: () => http.get("rp"),
+    //menu 
+    GetAllMenus: () => http.get("menu"),
+
+    //product
+    getAllProducts: () => http.get("products"),
+    getProductById: (id) => http.get(`products/${id}`),
+
+
+    //cart
+    getCart: () => http.get("carts"),
+    addToCart: (data) => http.post("carts", data),
+    updateCart: (data) => http.put("carts", data),
+    deleteCart: (id) => http.delete(`carts/${id}`),
+
+
+    //order
+    createOrder: (data) => http.post("orders", data),
+
+    //voucher   
+    getVoucherByCode: (code) => http.get(`vouchers/${code}`),
 };
